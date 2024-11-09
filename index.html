@@ -57,6 +57,12 @@ body {
         width: 150px;
         height: 50px;
       }
+
+      .error-message {
+        color: red;
+        font-size: 0.875rem;
+        margin-top: 5px;
+      }
       /* Responsive SweetAlert customization for phones */
   @media (max-width: 576px) {
     .swal2-popup {
@@ -87,8 +93,9 @@ body {
                 class="form-control"
                 id="username"
                 placeholder="Enter username"
-                required
+            
               />
+              <div id="usernameError" class="error-message"></div> <!-- Error message below username -->
             </div>
             <div class="form-group">
               <label for="password">Password</label>
@@ -97,10 +104,11 @@ body {
                 class="form-control"
                 id="password"
                 placeholder="Enter password"
-                required
+               
               />
+              <div id="passwordError" class="error-message"></div> <!-- Error message below password -->
             </div>
-            <button type="submit" class="btn  btn-block text-light ">
+            <button type="submit" class="btn btn-block text-light">
               Check In
             </button>
           </form>

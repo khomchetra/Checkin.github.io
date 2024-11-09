@@ -1,43 +1,59 @@
-document.getElementById('checkinForm').addEventListener('submit', function(event) {
+document.getElementById("checkinForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent form submission
 
     // Get values from form fields
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    let isValid = true;
 
-    // Perform simple validation
-    if (username && password) {
-        // Voice feedback with user's name
-        const message = `Welcome, ${username}. You have successfully checked in.`;
-        const speech = new SpeechSynthesisUtterance(message);
-        speech.lang = 'en-US'; // Set language if needed
-        window.speechSynthesis.speak(speech);
+    // Reset error messages and input borders
+    document.getElementById("usernameError").innerText = "";
+    document.getElementById("passwordError").innerText = "";
+    username.style.border = "";
+    password.style.border = "";
 
-        // Delay SweetAlert to allow speech to start
-        setTimeout(() => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Check-In Successful',
-                text: `Welcome, ${username}! You have successfully checked in.`,
-                confirmButtonText: 'OK',
-                customClass: {
-                    popup: 'swal-responsive' // This class applies the responsive styles
-                }
-            }).then(() => {
-                // Optional: Clear the form after submission
-                document.getElementById('checkinForm').reset();
-            });
-        }, 500); // Adjust delay as needed
-    } else {
-        // Show an error alert if fields are empty
-        Swal.fire({
-            icon: 'error',
-            title: 'Check-In Failed',
-            text: 'Please fill in both username and password.',
-            confirmButtonText: 'Try Again',
-            customClass: {
-                popup: 'swal-responsive'
-            }
-        });
+    // Check if fields are empty
+    if (!username.value) {
+      document.getElementById("usernameError").innerText = "Username is required.";
+      username.style.border = "2px solid red";
+      isValid = false;
     }
-});
+
+    if (!password.value) {
+      document.getElementById("passwordError").innerText = "Password is required.";
+      password.style.border = "2px solid red";
+      isValid = false;
+    }
+
+    // If all fields are valid, proceed with check-in
+    if (isValid) {
+      const message = `Welcome, ${username.value}. You have successfully checked in.`;
+      const speech = new SpeechSynthesisUtterance(message);
+      speech.lang = "en-US";
+      window.speechSynthesis.speak(speech);
+
+      setTimeout(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Check-In Successful",
+          text: `Welcome, ${username.value}! You have successfully checked in.`,
+          confirmButtonText: "OK",
+          customClass: {
+            popup: "swal-responsive",
+          },
+        }).then(() => {
+          document.getElementById("checkinForm").reset(); // Reset the form after successful check-in
+        });
+      }, 500);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Check-In Failed",
+        text: "Please fill in both username and password.",
+        confirmButtonText: "Try Again",
+        customClass: {
+          popup: "swal-responsive",
+        },
+      });
+    }
+  });
