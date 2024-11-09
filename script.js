@@ -19,7 +19,10 @@ document.getElementById('checkinForm').addEventListener('submit', function(event
                 icon: 'success',
                 title: 'Check-In Successful',
                 text: `Welcome, ${username}! You have successfully checked in.`,
-                confirmButtonText: 'OK'
+                confirmButtonText: 'OK',
+                customClass: {
+                    popup: 'swal-responsive' // This class applies the responsive styles
+                }
             }).then(() => {
                 // Optional: Clear the form after submission
                 document.getElementById('checkinForm').reset();
@@ -31,7 +34,10 @@ document.getElementById('checkinForm').addEventListener('submit', function(event
             icon: 'error',
             title: 'Check-In Failed',
             text: 'Please fill in both username and password.',
-            confirmButtonText: 'Try Again'
+            confirmButtonText: 'Try Again',
+            customClass: {
+                popup: 'swal-responsive'
+            }
         });
     }
 });
